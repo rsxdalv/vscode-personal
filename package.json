@@ -1,0 +1,49 @@
+{
+    "name": "rsxlv-personal",
+    "displayName": "rsxlv-personal",
+    "description": "",
+    "version": "0.2.0",
+    "repository": {},
+    "publisher": "rsxlv",
+    "engines": {
+        "vscode": "^1.22.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "activationEvents": [
+        "onCommand:extension.fixImports",
+        "onCommand:extension.removeDeclarations"
+    ],
+    "main": "./out/extension",
+    "contributes": {
+        "commands": [
+            {
+                "command": "extension.fixImports",
+                "title": "Fix Imports (/src, etc)"
+            },
+            {
+                "command": "extension.removeDeclarations",
+                "title": "Remove declarations"
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "postinstall": "node ./node_modules/vscode/bin/install",
+        "test": "npm run compile && node ./node_modules/vscode/bin/test"
+    },
+    "devDependencies": {
+        "vscode": "^1.1.6",
+        "@types/node": "^7.0.43",
+        "mocha": "^2.3.3",
+        "@types/mocha": "^2.2.42"
+    },
+    "dependencies": {
+        "@rsxlv/ramda-personal-adjunct": "^1.8.0",
+        "ramda": "^0.25.0",
+        "typescript": "^2.8.3"
+    }
+}
