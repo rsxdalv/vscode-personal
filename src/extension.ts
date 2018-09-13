@@ -3,6 +3,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import { removeDeclaration } from './remove-declaration';
+import { cleanTask, cleanQuokka } from './clean-task';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -42,7 +43,6 @@ export function activate(context: vscode.ExtensionContext) {
     // The commandId parameter must match the command field in package.json
     let disposable2 = vscode.commands.registerCommand('extension.removeDeclarations', () => {
         // The code you place here will be executed every time your command is executed
-
         let document = vscode.window.activeTextEditor.document;
         let text = document.getText();
         const replacement = removeDeclaration(text);
@@ -52,16 +52,36 @@ export function activate(context: vscode.ExtensionContext) {
             // document.positionAt(start),
             // document.positionAt(start + length)
         );
-
         const edit = new vscode.WorkspaceEdit();
-
         edit.replace(document.uri, range, replacement);
-
         vscode.workspace.applyEdit(edit);
-
     });
 
-    context.subscriptions.push(disposable, disposable2);
+    let disposable3 = vscode.commands.registerCommand('extension.cleanTask', () => {
+        let document = vscode.window.activeTextEditor.document;
+        const selection = vscode.window.activeTextEditor.selection;
+        let text = document.getText(selection);
+        const edit = new vscode.WorkspaceEdit();
+        edit.replace(document.uri, selection, cleanTask(text));
+        vscode.workspace.applyEdit(edit);
+    });
+
+    let disposable4 = vscode.commands.registerCommand('extension.cleanQuokka', () => {
+        let document = vscode.window.activeTextEditor.document;
+        const selection = vscode.window.activeTextEditor.selection;
+        let text = document.getText(selection);
+        const edit = new vscode.WorkspaceEdit();
+        edit.replace(document.uri, selection, cleanQuokka(text));
+        vscode.workspace.applyEdit(edit);
+    });
+
+
+    context.subscriptions.push(
+        disposable, 
+        disposable2,
+        disposable3,
+        disposable4,
+    );
 }
 
 // this method is called when your extension is deactivated
