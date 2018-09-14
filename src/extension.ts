@@ -96,6 +96,17 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.workspace.applyEdit(edit);
     });
 
+    let disposable7 = vscode.commands.registerCommand('extension.quickSnippet', () => {
+        const selections = vscode.window.activeTextEditor.selections;
+        const snippet = new vscode.SnippetString("<WriteHelper index={${1}} />");
+        // const snippet2 = new vscode.SnippetString();
+        vscode.window.activeTextEditor.insertSnippet(snippet, selections);
+        // vscode.commands.executeCommand("editor.action.insertSnippet", { text: "mkwrt" });
+        setTimeout(() => {
+            vscode.commands.executeCommand("extension.textPastry.0toX");
+        }, 30);
+    });
+
     context.subscriptions.push(
         disposable, 
         disposable2,
@@ -103,6 +114,7 @@ export function activate(context: vscode.ExtensionContext) {
         disposable4,
         disposable5,
         disposable6,
+        disposable7,
     );
 }
 
