@@ -4,6 +4,7 @@
 import * as vscode from 'vscode';
 import { removeDeclaration } from './remove-declaration';
 import { cleanTask, cleanQuokka } from './clean-task';
+import clipboardy = require('clipboardy');
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -75,12 +76,33 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.workspace.applyEdit(edit);
     });
 
+    let disposable5 = vscode.commands.registerCommand('extension.cleanTaskClipboard', () => {
+        let document = vscode.window.activeTextEditor.document;
+        const selection = vscode.window.activeTextEditor.selection;
+        // let text = document.getText(selection);
+        const text = clipboardy.readSync();
+        const edit = new vscode.WorkspaceEdit();
+        edit.insert(document.uri, selection.start, cleanTask(text));
+        // edit.replace(document.uri, selection, cleanQuokka(text));
+        vscode.workspace.applyEdit(edit);
+    });
+
+    let disposable6 = vscode.commands.registerCommand('extension.deleteTag', () => {
+        vscode.commands.executeCommand("editor.emmet.action.balanceOut");
+        let document = vscode.window.activeTextEditor.document;
+        const selection = vscode.window.activeTextEditor.selection;
+        const edit = new vscode.WorkspaceEdit();
+        edit.replace(document.uri, selection, "");
+        vscode.workspace.applyEdit(edit);
+    });
 
     context.subscriptions.push(
         disposable, 
         disposable2,
         disposable3,
         disposable4,
+        disposable5,
+        disposable6,
     );
 }
 

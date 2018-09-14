@@ -32,6 +32,14 @@
 				"title": "Clean quokka"
 			},
 			{
+				"command": "extension.deleteTag",
+				"title": "Delete tag"
+			},
+			{
+				"command": "extension.cleanTaskClipboard",
+				"title": "Clean task clipboard"
+			},
+			{
 				"command": "extension.cleanTask",
 				"title": "Clean task"
 			}
@@ -45,13 +53,15 @@
 		"test": "npm run compile && node ./node_modules/vscode/bin/test"
 	},
 	"devDependencies": {
-		"vscode": "^1.1.6",
+		"@types/clipboardy": "^1.1.0",
+		"@types/mocha": "^2.2.42",
 		"@types/node": "^7.0.43",
 		"mocha": "^2.3.3",
-		"@types/mocha": "^2.2.42"
+		"vscode": "^1.1.6"
 	},
 	"dependencies": {
 		"@rsxlv/ramda-personal-adjunct": "^1.8.0",
+		"clipboardy": "^1.2.3",
 		"ramda": "^0.25.0",
 		"typescript": "^2.8.3"
 	},
