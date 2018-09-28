@@ -40,6 +40,10 @@
 				"title": "Clean task clipboard"
 			},
 			{
+				"command": "extension.cleanTaskAnswers",
+				"title": "Clean task answers"
+			},
+			{
 				"command": "extension.quickSnippet",
 				"title": "Quick snippet"
 			},

@@ -7,6 +7,13 @@ export const cleanTask = x =>
         .replace(/   */g, ' ')
         .replace(/_{3,}/g, 'task_target')
 
+export const cleanTaskAnswers = x =>
+    x
+        .replace(/\n[\s\n]+/gm, '\n')
+        .replace(/^\n/gm, '')
+        .replace(/^\d\.[\s\.]+/gm, '')
+        .replace(/\.{2,} ?$/gm, '.')
+
 const badSymbol = '​';
 export const cleanQuokka = x =>
     x.replace(new RegExp(badSymbol, "g"), "")

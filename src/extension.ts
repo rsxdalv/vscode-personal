@@ -3,7 +3,7 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 import { removeDeclaration } from './remove-declaration';
-import { cleanTask, cleanQuokka } from './clean-task';
+import { cleanTask, cleanQuokka, cleanTaskAnswers } from './clean-task';
 import clipboardy = require('clipboardy');
 
 // this method is called when your extension is activated
@@ -81,10 +81,28 @@ export function activate(context: vscode.ExtensionContext) {
         const selection = vscode.window.activeTextEditor.selection;
         // let text = document.getText(selection);
         const text = clipboardy.readSync();
-        const edit = new vscode.WorkspaceEdit();
-        edit.insert(document.uri, selection.start, cleanTask(text));
+        // const edit = new vscode.WorkspaceEdit();
+        // edit.insert(document.uri, selection.start, cleanTask(text));
+        // // edit.replace(document.uri, selection, cleanQuokka(text));
+        // vscode.workspace.applyEdit(edit);
+        clipboardy.writeSync(cleanTask(text));
+        // edit.insert(document.uri, selection.start, cleanTaskAnswers(text));
         // edit.replace(document.uri, selection, cleanQuokka(text));
-        vscode.workspace.applyEdit(edit);
+        // vscode.workspace.applyEdit(edit);
+        vscode.commands.executeCommand("editor.action.clipboardPasteAction");
+    });
+
+    let cleanTaskAnswers_ = vscode.commands.registerCommand('extension.cleanTaskAnswers', () => {
+        let document = vscode.window.activeTextEditor.document;
+        const selection = vscode.window.activeTextEditor.selection;
+        // let text = document.getText(selection);
+        const text = clipboardy.readSync();
+        // const edit = new vscode.WorkspaceEdit();
+        clipboardy.writeSync(cleanTaskAnswers(text));
+        // edit.insert(document.uri, selection.start, cleanTaskAnswers(text));
+        // edit.replace(document.uri, selection, cleanQuokka(text));
+        // vscode.workspace.applyEdit(edit);
+        vscode.commands.executeCommand("editor.action.clipboardPasteAction");
     });
 
     let disposable6 = vscode.commands.registerCommand('extension.deleteTag', () => {
@@ -115,6 +133,7 @@ export function activate(context: vscode.ExtensionContext) {
         disposable5,
         disposable6,
         disposable7,
+        cleanTaskAnswers_,
     );
 }
 
