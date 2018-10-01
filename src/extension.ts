@@ -73,6 +73,14 @@ export function activate(context: vscode.ExtensionContext) {
         vscode.commands.executeCommand("editor.action.clipboardPasteAction");
     });
 
+    let disposable41 = vscode.commands.registerCommand('extension.cleanQuokkaClipboard', () => {
+        vscode.commands.executeCommand("editor.action.clipboardCopyAction");
+        setTimeout(() => {
+            const text = clipboardy.readSync();
+            clipboardy.writeSync(cleanQuokka(text));
+        }, 25);
+    });
+
     let disposable5 = vscode.commands.registerCommand('extension.cleanTaskClipboard', () => {
         const text = clipboardy.readSync();
         clipboardy.writeSync(cleanTask(text));
@@ -109,6 +117,7 @@ export function activate(context: vscode.ExtensionContext) {
         disposable5,
         disposable6,
         disposable7,
+        disposable41,
         cleanTaskAnswers_,
     );
 }

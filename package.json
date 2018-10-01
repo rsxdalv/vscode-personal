@@ -32,6 +32,10 @@
 				"title": "Clean quokka"
 			},
 			{
+				"command": "extension.cleanQuokkaClipboard",
+				"title": "Clean quokka clipboard"
+			},
+			{
 				"command": "extension.deleteTag",
 				"title": "Delete tag"
 			},
