@@ -68,40 +68,20 @@ export function activate(context: vscode.ExtensionContext) {
     });
 
     let disposable4 = vscode.commands.registerCommand('extension.cleanQuokka', () => {
-        let document = vscode.window.activeTextEditor.document;
-        const selection = vscode.window.activeTextEditor.selection;
-        let text = document.getText(selection);
-        const edit = new vscode.WorkspaceEdit();
-        edit.replace(document.uri, selection, cleanQuokka(text));
-        vscode.workspace.applyEdit(edit);
+        const text = clipboardy.readSync();
+        clipboardy.writeSync(cleanQuokka(text));
+        vscode.commands.executeCommand("editor.action.clipboardPasteAction");
     });
 
     let disposable5 = vscode.commands.registerCommand('extension.cleanTaskClipboard', () => {
-        let document = vscode.window.activeTextEditor.document;
-        const selection = vscode.window.activeTextEditor.selection;
-        // let text = document.getText(selection);
         const text = clipboardy.readSync();
-        // const edit = new vscode.WorkspaceEdit();
-        // edit.insert(document.uri, selection.start, cleanTask(text));
-        // // edit.replace(document.uri, selection, cleanQuokka(text));
-        // vscode.workspace.applyEdit(edit);
         clipboardy.writeSync(cleanTask(text));
-        // edit.insert(document.uri, selection.start, cleanTaskAnswers(text));
-        // edit.replace(document.uri, selection, cleanQuokka(text));
-        // vscode.workspace.applyEdit(edit);
         vscode.commands.executeCommand("editor.action.clipboardPasteAction");
     });
 
     let cleanTaskAnswers_ = vscode.commands.registerCommand('extension.cleanTaskAnswers', () => {
-        let document = vscode.window.activeTextEditor.document;
-        const selection = vscode.window.activeTextEditor.selection;
-        // let text = document.getText(selection);
         const text = clipboardy.readSync();
-        // const edit = new vscode.WorkspaceEdit();
         clipboardy.writeSync(cleanTaskAnswers(text));
-        // edit.insert(document.uri, selection.start, cleanTaskAnswers(text));
-        // edit.replace(document.uri, selection, cleanQuokka(text));
-        // vscode.workspace.applyEdit(edit);
         vscode.commands.executeCommand("editor.action.clipboardPasteAction");
     });
 
@@ -116,13 +96,9 @@ export function activate(context: vscode.ExtensionContext) {
 
     let disposable7 = vscode.commands.registerCommand('extension.quickSnippet', () => {
         const selections = vscode.window.activeTextEditor.selections;
-        const snippet = new vscode.SnippetString("<WriteHelper index={${1}} />");
-        // const snippet2 = new vscode.SnippetString();
+        const snippet = new vscode.SnippetString("<QuestionHelper index={${1}} />");
         vscode.window.activeTextEditor.insertSnippet(snippet, selections);
-        // vscode.commands.executeCommand("editor.action.insertSnippet", { text: "mkwrt" });
-        setTimeout(() => {
-            vscode.commands.executeCommand("extension.textPastry.0toX");
-        }, 30);
+        setTimeout(() => { vscode.commands.executeCommand("extension.textPastry.0toX"); }, 30);
     });
 
     context.subscriptions.push(
